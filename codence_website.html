@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CODENCE - The Future-Building Group</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: #000;
+            padding: 15px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: #000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            font-weight: bold;
+            border: 2px solid #fff;
+            flex-shrink: 0;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+            padding: 8px 0;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+        }
+
+        .hero h2 {
+            font-size: clamp(32px, 5vw, 52px);
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 2.5vw, 20px);
+            color: #b0b0b0;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 14px 35px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .cta-button:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 60px 20px;
+        }
+
+        h2 {
+            font-size: clamp(28px, 4vw, 40px);
+            color: #fff;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        /* Divisions Section */
+        .divisions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .division-card {
+            background: #2d2d2d;
+            padding: 28px;
+            border-radius: 12px;
+            border: 2px solid #444;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .division-card:hover {
+            transform: translateY(-5px);
+            border-color: #666;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .division-card h3 {
+            color: #fff;
+            font-size: clamp(20px, 2.5vw, 24px);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .division-card p {
+            color: #b0b0b0;
+            margin-bottom: 15px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .division-card ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: auto;
+        }
+
+        .division-card li {
+            color: #999;
+            padding: 6px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .division-card li:before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* Projects Section */
+        .projects {
+            background: #1a1a1a;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .project-card {
+            background: #2d2d2d;
+            padding: 28px;
+            border-radius: 12px;
+            border: 2px solid #444;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #666;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-card h3 {
+            color: #fff;
+            font-size: clamp(20px, 2.5vw, 24px);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .project-card p {
+            color: #b0b0b0;
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: #444;
+            color: #fff;
+            padding: 11px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .project-link:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
+        /* Mission & Vision */
+        .mission-vision {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .mv-card {
+            background: #2d2d2d;
+            padding: 28px;
+            border-radius: 12px;
+            border-left: 4px solid #fff;
+        }
+
+        .mv-card h3 {
+            color: #fff;
+            font-size: clamp(20px, 2.5vw, 24px);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .mv-card p {
+            color: #b0b0b0;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .mv-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .mv-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #b0b0b0;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .mv-card li span {
+            position: absolute;
+            left: 0;
+        }
+
+        /* About Section */
+        .about {
+            background: #1a1a1a;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 35px;
+            align-items: start;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-image-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .about-image {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            border: 3px solid #444;
+            object-fit: cover;
+        }
+
+        .about-text h3 {
+            color: #fff;
+            font-size: clamp(24px, 3vw, 28px);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .about-text p {
+            color: #b0b0b0;
+            margin-bottom: 15px;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .social-link {
+            display: inline-block;
+            background: #0077b5;
+            color: #fff;
+            padding: 12px 28px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: #006399;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 119, 181, 0.3);
+        }
+
+        /* Contact Section */
+        .contact-card {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-card a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: #b0b0b0;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Tablet Styles */
+        @media (min-width: 768px) {
+            .about-content {
+                grid-template-columns: 250px 1fr;
+                gap: 40px;
+                align-items: center;
+            }
+
+            .about-image-wrapper {
+                justify-content: flex-start;
+            }
+
+            .about-text {
+                text-align: left;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 767px) {
+            header {
+                padding: 12px 0;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .logo {
+                gap: 10px;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 22px;
+            }
+
+            .logo h1 {
+                font-size: 22px;
+            }
+
+            nav {
+                width: 100%;
+                justify-content: center;
+                gap: 18px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 60px 20px 50px;
+            }
+
+            section {
+                padding: 50px 20px;
+            }
+
+            .divisions,
+            .project-grid,
+            .mission-vision {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .division-card,
+            .project-card,
+            .mv-card {
+                padding: 24px;
+            }
+
+            .about-content {
+                gap: 30px;
+                text-align: center;
+            }
+
+            .about-text {
+                text-align: center;
+            }
+
+            .cta-button,
+            .project-link,
+            .social-link {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 13px;
+                padding: 5px 0;
+            }
+
+            .division-card,
+            .project-card,
+            .mv-card {
+                padding: 20px;
+            }
+
+            .hero {
+                padding: 50px 15px 40px;
+            }
+
+            section {
+                padding: 40px 15px;
+            }
+        }
+
+        /* Large Screens */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">⚡</div>
+                    <h1>CODENCE</h1>
+                </div>
+                <nav>
+                    <a href="#home">Home</a>
+                    <a href="#divisions">Divisions</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h2>The Future-Building Group</h2>
+            <p>CODENCE is a multi-division digital innovation group that empowers developers, creators, and entrepreneurs through world-class software, stunning design, and complete business-building services. We merge technology, creativity, and entrepreneurship into one ecosystem where ideas become reality.</p>
+            <a href="#contact" class="cta-button">Get Started</a>
+        </div>
+    </section>
+
+    <section id="divisions">
+        <div class="container">
+            <h2>Our Sub-Startups</h2>
+            <div class="divisions">
+                <div class="division-card">
+                    <h3>🔵 CODENCE DEVELOP</h3>
+                    <p>Programming, AI & Engineering</p>
+                    <p>CODENCE DEVELOP is the powerhouse where all coding and engineering happens. We build high-performance applications using modern frameworks, clean architecture, and advanced AI.</p>
+                    <ul>
+                        <li>Web development (HTML, CSS, JS, MERN)</li>
+                        <li>Full-stack applications</li>
+                        <li>Admin dashboards</li>
+                        <li>AI automation and custom tools</li>
+                        <li>API systems</li>
+                        <li>School, finance & health applications</li>
+                    </ul>
+                </div>
+
+                <div class="division-card">
+                    <h3>🎨 CODENCE STUDIO</h3>
+                    <p>Design, Branding & UI/UX</p>
+                    <p>Creating stunning visual experiences and brand identities that captivate and engage. From logos to complete design systems.</p>
+                    <ul>
+                        <li>Brand identity design</li>
+                        <li>UI/UX design</li>
+                        <li>Visual design systems</li>
+                        <li>Modern, clean aesthetics</li>
+                        <li>User-centered approach</li>
+                    </ul>
+                </div>
+
+                <div class="division-card">
+                    <h3>🚀 CODENCE FOUNDERS</h3>
+                    <p>Store Building, Tech Setup & Business Services</p>
+                    <p>Complete business-building services to help entrepreneurs launch and scale their ventures with the right technology foundation.</p>
+                    <ul>
+                        <li>Store building solutions</li>
+                        <li>Tech infrastructure setup</li>
+                        <li>Business consultation</li>
+                        <li>Launch strategies</li>
+                        <li>Growth support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2>Flagship Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>⭐ NEXO</h3>
+                    <p>Real-Time Chatting App - A smooth, modern, real-time chat application designed for fast communication and clean UI.</p>
+                    <a href="https://talk-nexo-hub.lovable.app/chat" class="project-link" target="_blank">Try NEXO</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>🤖 AI Life OS</h3>
+                    <p>Your complete life management system with reminders, notes, tasks, and more powered by AI.</p>
+                    <a href="https://mindstone-harmony-craftbyte.lovable.app/" class="project-link" target="_blank">Launch AI Life OS</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>📚 AI Student Life</h3>
+                    <p>Smart study companion with study tools, reminders, and task management designed specifically for students.</p>
+                    <a href="https://aistudentlife.vercel.app/" class="project-link" target="_blank">Open AI Student Life</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="mission">
+        <div class="container">
+            <h2>Mission & Vision</h2>
+            <div class="mission-vision">
+                <div class="mv-card">
+                    <h3>🎯 Our Mission</h3>
+                    <p>To build the most powerful ecosystem of apps, designs, and services that empower global creators and businesses.</p>
+                </div>
+
+                <div class="mv-card">
+                    <h3>🌟 Our Vision</h3>
+                    <p>To become a world-leading tech & design group delivering innovation across development, branding, and business creation.</p>
+                </div>
+            </div>
+
+            <div class="mv-card" style="margin-top: 30px;">
+                <h3>⚡ Why CODENCE?</h3>
+                <ul>
+                    <li><span>✓</span> High-performance, clean-coded applications</li>
+                    <li><span>✓</span> Modern black/grey design language</li>
+                    <li><span>✓</span> Multiple divisions working together</li>
+                    <li><span>✓</span> AI-powered development and automation</li>
+                    <li><span>✓</span> Perfect for startups, students, creators & businesses</li>
+                    <li><span>✓</span> Reliable, scalable, future-ready solutions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-image-wrapper">
+                    <img src="https://i.ibb.co/2cMKZY9/image.png" alt="Varun" class="about-image">
+                </div>
+                <div class="about-text">
+                    <h3>Hello! I'm Varun</h3>
+                    <p>A young and passionate student innovator who loves creating intelligent digital products that help people in real life. I'm deeply interested in AI, app development, and building software that improves the daily life of students like me.</p>
+                    <p>I enjoy experimenting with new ideas, learning fast, and turning concepts into working applications. My mission is to develop simple, powerful tools that make studying smarter, more organized, and more enjoyable for every student.</p>
+                    <p>I believe great things can be built with focus, consistency, and creativity—and I'm working every day to prove it.</p>
+                    <a href="https://www.linkedin.com/in/varun-suresh-a25387382" class="social-link" target="_blank">Connect on LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="mv-card contact-card">
+                <h3>📩 Get in Touch</h3>
+                <p style="font-size: 18px; margin-top: 20px;">
+                    Email: <a href="mailto:contactcodence@gmail.com">contactcodence@gmail.com</a>
+                </p>
+                <p style="margin-top: 20px; color: #b0b0b0;">
+                    Let's build something amazing together!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CODENCE - The Future-Building Group. All rights reserved.</p>
+            <p style="margin-top: 10px;">
+                <a href="mailto:contactcodence@gmail.com">contactcodence@gmail.com</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
