@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CODENCE - The Future-Building Group</title>
+    <title>CODENCE DEVELOP - The Future-Building Group</title>
     <style>
         * {
             margin: 0;
@@ -318,6 +318,227 @@
             background: #1a1a1a;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            margin: 50px auto;
+            padding: 40px;
+            max-width: 1000px;
+            border-radius: 12px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 25px;
+            top: 20px;
+            font-size: 35px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            color: #b0b0b0;
+        }
+
+        /* Work With Us Section */
+        .work-with-us {
+            background: transparent;
+        }
+
+        .work-intro {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .work-intro h3 {
+            color: #fff;
+            font-size: clamp(24px, 3vw, 32px);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .work-intro p {
+            color: #b0b0b0;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .who-we-are {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #fff;
+        }
+
+        .who-we-are h3 {
+            color: #fff;
+            font-size: clamp(22px, 2.5vw, 26px);
+            margin-bottom: 15px;
+        }
+
+        .who-we-are p {
+            color: #b0b0b0;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .opportunities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .opportunity-card {
+            background: #1a1a1a;
+            padding: 28px;
+            border-radius: 12px;
+            border: 2px solid #444;
+        }
+
+        .opportunity-card:hover {
+            border-color: #666;
+        }
+
+        .opportunity-card h4 {
+            color: #fff;
+            font-size: clamp(20px, 2vw, 24px);
+            margin-bottom: 15px;
+        }
+
+        .opportunity-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .opportunity-card li {
+            color: #999;
+            padding: 6px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .opportunity-card li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .benefits-section {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #fff;
+        }
+
+        .benefits-section h3 {
+            color: #fff;
+            font-size: clamp(22px, 2.5vw, 26px);
+            margin-bottom: 15px;
+        }
+
+        .benefits-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .benefits-section li {
+            color: #b0b0b0;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .benefits-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .call-to-action {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            background: #1a1a1a;
+            padding: 35px;
+            border-radius: 12px;
+            border: 2px solid #444;
+        }
+
+        .call-to-action h3 {
+            color: #fff;
+            font-size: clamp(22px, 2.5vw, 28px);
+            margin-bottom: 15px;
+        }
+
+        .call-to-action p {
+            color: #b0b0b0;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .call-to-action .work-email {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 14px 35px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 6px;
+        }
+
+        .call-to-action .work-email:hover {
+            background: #e0e0e0;
+        }
+
         .about-content {
             max-width: 700px;
             margin: 0 auto;
@@ -504,12 +725,13 @@
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">⚡</div>
-                    <h1>CODENCE</h1>
+                    <h1>CODENCE DEVELOP</h1>
                 </div>
                 <nav>
                     <a href="#home">Home</a>
                     <a href="#divisions">Divisions</a>
                     <a href="#projects">Projects</a>
+                    <a href="#" onclick="openWorkModal(event)">Work With Us</a>
                     <a href="#about">About</a>
                     <a href="#contact">Contact</a>
                 </nav>
@@ -520,7 +742,7 @@
     <section id="home" class="hero">
         <div class="container">
             <h2>The Future-Building Group</h2>
-            <p>CODENCE is a multi-division digital innovation group that empowers developers, creators, and entrepreneurs through world-class software, stunning design, and complete business-building services. We merge technology, creativity, and entrepreneurship into one ecosystem where ideas become reality.</p>
+            <p>CODENCE DEVELOP is a multi-division digital innovation group that empowers developers, creators, and entrepreneurs through world-class software, stunning design, and complete business-building services. We merge technology, creativity, and entrepreneurship into one ecosystem where ideas become reality.</p>
             <a href="#contact" class="cta-button">Get Started</a>
         </div>
     </section>
@@ -612,7 +834,7 @@
                 </div>
 
                 <div class="mv-card">
-                    <h3>⚡ Why CODENCE?</h3>
+                    <h3>⚡ Why CODENCE DEVELOP?</h3>
                     <ul>
                         <li><span>✓</span> High-performance, clean-coded applications</li>
                         <li><span>✓</span> Modern black/grey design language</li>
@@ -625,6 +847,79 @@
             </div>
         </div>
     </section>
+
+    <!-- Work With Us Modal -->
+    <div id="workModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeWorkModal()">&times;</button>
+            
+            <section class="work-with-us">
+                <div class="container">
+                    <h2>Work With Us</h2>
+                    
+                    <div class="work-intro">
+                        <h3>Build the Future with Our Startup</h3>
+                        <p>At our company, we are not just creating products—we are building opportunities. Whether you're a developer, designer, or entrepreneur, we welcome passionate creators to join us, contribute, and grow alongside our mission.</p>
+                    </div>
+
+                    <div class="who-we-are">
+                        <h3>🌟 Who We Are</h3>
+                        <p>A new-age startup focused on software development, automation, business solutions, and digital products. We believe in innovation, ownership, and making ideas come to life.</p>
+                    </div>
+
+                    <h3 style="text-align: center; color: #fff; margin-bottom: 30px; font-size: clamp(24px, 3vw, 30px);">💼 Who Can Join</h3>
+                    <p style="text-align: center; color: #b0b0b0; margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">We offer collaboration and employment opportunities for:</p>
+
+                    <div class="opportunities-grid">
+                        <div class="opportunity-card">
+                            <h4>👨‍💻 Developers</h4>
+                            <ul>
+                                <li>Full-stack, app, web, backend, AI, or any tech background</li>
+                                <li>Work on real client projects & internal products</li>
+                                <li>Chance to lead new technical initiatives</li>
+                            </ul>
+                        </div>
+
+                        <div class="opportunity-card">
+                            <h4>🎨 Designers</h4>
+                            <ul>
+                                <li>UI/UX, brand identity, product design, or graphics</li>
+                                <li>Create modern and beautiful digital experiences</li>
+                                <li>Build design systems and brand guidelines</li>
+                            </ul>
+                        </div>
+
+                        <div class="opportunity-card">
+                            <h4>🧠 Entrepreneurs & Business Minds</h4>
+                            <ul>
+                                <li>Business strategy, marketing, sales, or product thinking</li>
+                                <li>Help grow the company and launch new products</li>
+                                <li>Join as partners or contributors</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="benefits-section">
+                        <h3>🤝 Why Work With Us</h3>
+                        <ul>
+                            <li>Real-world product development</li>
+                            <li>Flexible working & remote opportunities</li>
+                            <li>Space to experiment, own, and innovate</li>
+                            <li>Growth-oriented team environment</li>
+                            <li>Build your portfolio and business experience</li>
+                        </ul>
+                    </div>
+
+                    <div class="call-to-action">
+                        <h3>🌍 Be Part of Something Big</h3>
+                        <p>We're creating a platform where talented people can build products, grow together, and shape the future of digital business.</p>
+                        <p style="margin-bottom: 20px;">📩 Want to join? Send your profile or portfolio to:</p>
+                        <a href="mailto:contactcodeins@gmail.com" class="work-email">✉️ contactcodeins@gmail.com</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 
     <section id="about" class="about">
         <div class="container">
@@ -662,5 +957,35 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        // Open Work With Us Modal
+        function openWorkModal(event) {
+            event.preventDefault();
+            document.getElementById('workModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Work With Us Modal
+        function closeWorkModal() {
+            document.getElementById('workModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('workModal');
+            if (event.target === modal) {
+                closeWorkModal();
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeWorkModal();
+            }
+        });
+    </script>
 </body>
 </html>
