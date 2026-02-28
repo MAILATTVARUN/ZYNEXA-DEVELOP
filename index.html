@@ -3,415 +3,587 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZYNEXA DEVELOP</title>
+<title>ZYNEXA DEVELOP — THINK. BUILD. CONQUER.</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #080808;
-    --surface: #111111;
-    --orange: #f97316;
-    --yellow: #fbbf24;
-    --text: #f0f0f0;
-    --muted: #777;
-    --border: #222;
-  }
+:root {
+  --bg: #060606;
+  --surface: #0f0f0f;
+  --surface2: #161616;
+  --orange: #f97316;
+  --yellow: #fbbf24;
+  --text: #f0f0f0;
+  --muted: #666;
+  --border: #1e1e1e;
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; font-size: 16px; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-    line-height: 1.6;
-  }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
 
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 2px; }
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  width: 12px; height: 12px;
+  background: var(--orange);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(249,115,22,0.5);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+}
+body:hover .cursor { opacity: 1; }
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 6%; height: 70px;
-    background: rgba(8,8,8,0.94);
-    backdrop-filter: blur(24px);
-    border-bottom: 1px solid var(--border);
-    transition: border-color 0.3s;
-  }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--orange), var(--yellow)); border-radius: 2px; }
 
-  .logo-wrap { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-  .logo-icon { width: 44px; height: 44px; flex-shrink: 0; }
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 6%; height: 70px;
+  background: rgba(6,6,6,0.92);
+  backdrop-filter: blur(30px);
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.4s, box-shadow 0.4s;
+}
+nav.scrolled { border-bottom-color: rgba(249,115,22,0.2); box-shadow: 0 4px 40px rgba(0,0,0,0.5); }
 
-  @keyframes boltPulse {
-    0%, 100% { filter: drop-shadow(0 0 6px rgba(249,115,22,0.7)); }
-    50% { filter: drop-shadow(0 0 18px rgba(251,191,36,0.9)); }
-  }
-  .logo-icon { animation: boltPulse 3s ease-in-out infinite; }
+.logo-wrap { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+.logo-icon { width: 44px; height: 44px; flex-shrink: 0; }
 
-  .logo-text {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.6rem; letter-spacing: 3px; line-height: 1;
-    background: linear-gradient(135deg, var(--orange), var(--yellow));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .logo-sub { font-size: 0.5rem; letter-spacing: 5px; color: var(--muted); font-weight: 600; text-transform: uppercase; display: block; margin-top: 3px; }
+@keyframes boltPulse {
+  0%,100% { filter: drop-shadow(0 0 6px rgba(249,115,22,0.8)); }
+  50% { filter: drop-shadow(0 0 22px rgba(251,191,36,1)); }
+}
+.logo-icon { animation: boltPulse 2.5s ease-in-out infinite; }
 
-  nav ul { display: flex; list-style: none; align-items: center; gap: 0.25rem; }
-  nav ul li a {
-    color: var(--muted); text-decoration: none; font-size: 0.78rem;
-    letter-spacing: 1.5px; font-weight: 500; text-transform: uppercase;
-    padding: 0.5rem 0.95rem; border-radius: 5px; display: block;
-    transition: color 0.3s;
-  }
-  nav ul li a:hover { color: var(--orange); }
+.logo-text {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.6rem; letter-spacing: 3px; line-height: 1;
+  background: linear-gradient(135deg, var(--orange), var(--yellow));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.logo-sub { font-size: 0.48rem; letter-spacing: 5px; color: var(--muted); font-weight: 600; text-transform: uppercase; display: block; margin-top: 3px; }
 
-  .nav-cta {
-    background: linear-gradient(135deg, var(--orange), var(--yellow)) !important;
-    color: #000 !important; -webkit-text-fill-color: #000 !important;
-    font-weight: 700 !important; padding: 0.55rem 1.5rem !important;
-    border-radius: 5px !important; margin-left: 0.5rem; letter-spacing: 1px !important;
-  }
-  .nav-cta:hover { opacity: 0.88 !important; }
+nav ul { display: flex; list-style: none; align-items: center; gap: 0.2rem; }
+nav ul li a {
+  color: var(--muted); text-decoration: none; font-size: 0.76rem;
+  letter-spacing: 1.5px; font-weight: 500; text-transform: uppercase;
+  padding: 0.5rem 1rem; border-radius: 5px; display: block;
+  transition: color 0.3s;
+  position: relative;
+}
+nav ul li a::after {
+  content: ''; position: absolute; bottom: 2px; left: 50%; right: 50%;
+  height: 1px; background: var(--orange);
+  transition: left 0.3s, right 0.3s;
+}
+nav ul li a:hover { color: var(--orange); }
+nav ul li a:hover::after { left: 10%; right: 10%; }
 
-  .hamburger {
-    display: none; flex-direction: column; gap: 5px;
-    cursor: pointer; background: none; border: none; padding: 5px;
-  }
-  .hamburger span { display: block; width: 26px; height: 2px; background: var(--orange); border-radius: 2px; }
+.nav-cta {
+  background: linear-gradient(135deg, var(--orange), var(--yellow)) !important;
+  color: #000 !important; -webkit-text-fill-color: #000 !important;
+  font-weight: 700 !important; padding: 0.55rem 1.5rem !important;
+  border-radius: 5px !important; margin-left: 0.6rem; letter-spacing: 1px !important;
+  transition: transform 0.25s, box-shadow 0.25s !important;
+  box-shadow: 0 0 0 rgba(249,115,22,0);
+}
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { transform: translateY(-2px) !important; box-shadow: 0 6px 28px rgba(249,115,22,0.45) !important; }
 
-  .mobile-menu {
-    display: none; position: fixed;
-    top: 70px; left: 0; right: 0; z-index: 999;
-    background: rgba(8,8,8,0.98);
-    border-bottom: 1px solid var(--border);
-    padding: 1.5rem 6%;
-    flex-direction: column;
-  }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a {
-    color: var(--muted); text-decoration: none; font-size: 0.9rem;
-    letter-spacing: 2px; font-weight: 500; text-transform: uppercase;
-    padding: 0.9rem 0; border-bottom: 1px solid var(--border);
-    transition: color 0.3s;
-  }
-  .mobile-menu a:last-child { border-bottom: none; }
-  .mobile-menu a:hover { color: var(--orange); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: none; background: none; border: none; padding: 5px; }
+.hamburger span { display: block; width: 26px; height: 2px; background: var(--orange); border-radius: 2px; transition: 0.3s; }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    text-align: center; padding: 110px 6% 6rem;
-    position: relative; overflow: hidden;
-  }
+.mobile-menu {
+  display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 999;
+  background: rgba(6,6,6,0.98); border-bottom: 1px solid var(--border);
+  padding: 1.5rem 6%; flex-direction: column;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { color: var(--muted); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; font-weight: 500; text-transform: uppercase; padding: 0.9rem 0; border-bottom: 1px solid var(--border); transition: color 0.3s; }
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:hover { color: var(--orange); }
 
-  .hero-glow {
-    position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(ellipse 70% 55% at 50% 65%, rgba(249,115,22,0.1) 0%, transparent 70%);
-  }
-  .grid-bg {
-    position: absolute; inset: 0; pointer-events: none;
-    background-image:
-      linear-gradient(rgba(249,115,22,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(249,115,22,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 30%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 30%, transparent 100%);
-  }
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 100px 6% 5rem;
+  position: relative; overflow: hidden;
+}
 
-  .hero-inner { position: relative; z-index: 2; max-width: 860px; width: 100%; }
+/* Animated orbs */
+.orb {
+  position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none;
+}
+.orb1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(249,115,22,0.12), transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  animation: orbFloat1 8s ease-in-out infinite;
+}
+.orb2 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(251,191,36,0.08), transparent 70%);
+  top: 20%; right: 15%;
+  animation: orbFloat2 6s ease-in-out infinite;
+}
+.orb3 {
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, rgba(249,115,22,0.06), transparent 70%);
+  bottom: 20%; left: 10%;
+  animation: orbFloat3 7s ease-in-out infinite;
+}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+@keyframes orbFloat1 { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-52%) scale(1.08); } }
+@keyframes orbFloat2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+@keyframes orbFloat3 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(25px); } }
 
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.3);
-    color: var(--orange); font-size: 0.72rem; letter-spacing: 3px;
-    padding: 0.5rem 1.4rem; border-radius: 100px; margin-bottom: 2.2rem;
-    text-transform: uppercase; font-weight: 600;
-    animation: fadeUp 0.8s ease both;
-  }
+/* Grid */
+.grid-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(249,115,22,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249,115,22,0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%);
+  animation: gridShift 20s linear infinite;
+}
+@keyframes gridShift { from { background-position: 0 0; } to { background-position: 56px 56px; } }
 
-  .hero-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(3.8rem, 11vw, 8.5rem);
-    line-height: 0.9; letter-spacing: 4px; margin-bottom: 1.8rem;
-    animation: fadeUp 0.8s 0.2s ease both;
-  }
-  .hero-title .line1 { display: block; color: var(--text); }
-  .hero-title .line2 {
-    display: block;
-    background: linear-gradient(135deg, var(--orange) 20%, var(--yellow));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
+.hero-inner { position: relative; z-index: 2; max-width: 900px; width: 100%; }
 
-  .hero-desc {
-    font-size: 1.05rem; color: #888; max-width: 540px; margin: 0 auto 2.8rem;
-    line-height: 1.85; font-weight: 300;
-    animation: fadeUp 0.8s 0.38s ease both;
-  }
+/* Particle dots */
+.particles { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.particle {
+  position: absolute; width: 2px; height: 2px;
+  background: var(--orange); border-radius: 50%;
+  animation: particleFloat linear infinite;
+  opacity: 0;
+}
+@keyframes particleFloat {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.2; }
+  100% { transform: translateY(-120px) translateX(var(--dx)); opacity: 0; }
+}
 
-  .hero-btns {
-    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-    animation: fadeUp 0.8s 0.56s ease both;
-  }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  .btn-primary {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--orange), var(--yellow));
-    color: #000; padding: 0.9rem 2.4rem; border-radius: 7px;
-    font-weight: 700; font-size: 0.88rem; letter-spacing: 1.5px;
-    text-transform: uppercase; text-decoration: none;
-    transition: transform 0.25s, box-shadow 0.25s;
-    box-shadow: 0 0 32px rgba(249,115,22,0.35);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 55px rgba(249,115,22,0.55); }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.3);
+  color: var(--orange); font-size: 0.72rem; letter-spacing: 3px;
+  padding: 0.5rem 1.4rem; border-radius: 100px; margin-bottom: 2rem;
+  text-transform: uppercase; font-weight: 600;
+  animation: fadeUp 1s 0.2s ease both;
+}
 
-  .btn-outline {
-    display: inline-block; background: transparent; color: var(--text);
-    padding: 0.9rem 2.4rem; border-radius: 7px;
-    font-weight: 500; font-size: 0.88rem; letter-spacing: 1.5px;
-    text-transform: uppercase; text-decoration: none;
-    border: 1px solid #333; transition: border-color 0.3s, color 0.3s;
-  }
-  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+/* Tagline — animated word-by-word */
+.hero-tagline {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(1rem, 3vw, 2rem);
+  letter-spacing: 8px;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+  animation: fadeUp 1s 0.35s ease both;
+}
+.tagline-word {
+  display: inline-block;
+  animation: taglineWord 0.6s ease both;
+}
+.tagline-word:nth-child(1) { animation-delay: 0.4s; }
+.tagline-word:nth-child(2) { animation-delay: 0.6s; color: var(--orange); }
+.tagline-word:nth-child(3) { animation-delay: 0.8s; }
+@keyframes taglineWord { from { opacity: 0; transform: translateY(20px) scale(0.9); } to { opacity: 1; transform: none; } }
 
-  /* SECTIONS */
-  .section { padding: 6rem 6%; }
-  .section-inner { max-width: 1240px; margin: 0 auto; }
+.hero-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(4rem, 13vw, 10rem);
+  line-height: 0.88; letter-spacing: 4px; margin-bottom: 1.8rem;
+  animation: fadeUp 1s 0.5s ease both;
+}
+.hero-title .line1 { display: block; color: var(--text); }
+.hero-title .line2 {
+  display: block;
+  background: linear-gradient(135deg, var(--orange) 0%, var(--yellow) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: gradientShift 4s ease-in-out infinite alternate;
+}
+@keyframes gradientShift {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(15deg); }
+}
 
-  .divider {
-    height: 1px; max-width: 1240px; margin: 0 auto;
-    background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent);
-  }
+.hero-desc {
+  font-size: 1.05rem; color: #888; max-width: 540px; margin: 0 auto 2.8rem;
+  line-height: 1.85; font-weight: 300;
+  animation: fadeUp 1s 0.65s ease both;
+}
 
-  .section-label {
-    display: inline-flex; align-items: center; gap: 0.8rem;
-    font-size: 0.68rem; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--orange); font-weight: 700; margin-bottom: 1rem;
-  }
-  .section-label::before { content: ''; width: 28px; height: 1px; background: var(--orange); }
-  .section-label.centered { display: flex; justify-content: center; }
+.hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeUp 1s 0.8s ease both; }
 
-  h2.section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2rem, 4.5vw, 3rem);
-    font-weight: 800; line-height: 1.12; margin-bottom: 1rem; color: var(--text);
-  }
+.btn-primary {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--orange), var(--yellow));
+  color: #000; padding: 0.95rem 2.6rem; border-radius: 7px;
+  font-weight: 700; font-size: 0.88rem; letter-spacing: 1.5px;
+  text-transform: uppercase; text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 32px rgba(249,115,22,0.35);
+  position: relative; overflow: hidden;
+}
+.btn-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-100%); transition: transform 0.4s;
+}
+.btn-primary:hover::before { transform: translateX(100%); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(249,115,22,0.6); }
 
-  .grad {
-    background: linear-gradient(135deg, var(--orange) 20%, var(--yellow));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
+.btn-outline {
+  display: inline-block; background: transparent; color: var(--text);
+  padding: 0.95rem 2.6rem; border-radius: 7px;
+  font-weight: 500; font-size: 0.88rem; letter-spacing: 1.5px;
+  text-transform: uppercase; text-decoration: none;
+  border: 1px solid #2a2a2a; transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+.btn-outline:hover { border-color: var(--orange); color: var(--orange); box-shadow: 0 0 20px rgba(249,115,22,0.1) inset; }
 
-  .text-center { text-align: center; }
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  color: var(--muted); font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+  animation: fadeIn 1s 1.5s ease both;
+}
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--orange), transparent); animation: scrollLine 2s ease-in-out infinite; }
+@keyframes scrollLine { 0%,100% { transform: scaleY(0.3); opacity: 0.3; } 50% { transform: scaleY(1); opacity: 1; } }
 
-  /* REVEAL */
-  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.75s ease, transform 0.75s ease; }
-  .reveal.visible { opacity: 1; transform: none; }
+/* ── SECTIONS ── */
+.section { padding: 7rem 6%; }
+.section-inner { max-width: 1240px; margin: 0 auto; }
 
-  /* ABOUT */
-  .about-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 5rem; align-items: start;
-  }
-  .about-text p { color: #8a8a8a; line-height: 1.9; margin-bottom: 1.2rem; font-size: 0.97rem; font-weight: 300; }
-  .about-text p:last-of-type { margin-bottom: 0; }
+.divider {
+  height: 1px; max-width: 1240px; margin: 0 auto;
+  background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
 
-  .est-pill {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    margin-top: 1.8rem; background: rgba(249,115,22,0.07);
-    border: 1px solid rgba(249,115,22,0.22); border-radius: 8px;
-    padding: 0.75rem 1.3rem; font-size: 0.87rem; color: #999; font-weight: 400;
-  }
-  .est-pill strong { color: var(--orange); font-weight: 700; }
+.section-label {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  font-size: 0.68rem; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--orange); font-weight: 700; margin-bottom: 1rem;
+}
+.section-label::before { content: ''; width: 28px; height: 1px; background: var(--orange); transition: width 0.6s ease; }
+.section-label.centered { display: flex; justify-content: center; }
+.section-label.visible::before { width: 28px; }
 
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+h2.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 800; line-height: 1.1; margin-bottom: 1rem; color: var(--text);
+}
 
-  .stat-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 1.8rem 1.6rem;
-    position: relative; overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s;
-  }
-  .stat-card::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: linear-gradient(to bottom, var(--orange), var(--yellow));
-  }
-  .stat-card:hover { transform: translateY(-4px); border-color: rgba(249,115,22,0.3); }
-  .stat-num {
-    font-family: 'Bebas Neue', cursive; font-size: 2.8rem; line-height: 1;
-    background: linear-gradient(135deg, var(--orange), var(--yellow));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    margin-bottom: 0.35rem;
-  }
-  .stat-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+.grad {
+  background: linear-gradient(135deg, var(--orange) 20%, var(--yellow));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
 
-  /* DIVISIONS */
-  .divisions-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem; margin-top: 3rem;
-  }
+.text-center { text-align: center; }
 
-  .division-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 18px; padding: 2.5rem 2rem;
-    position: relative; overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-  }
-  .division-card::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(249,115,22,0.05), transparent 60%);
-    opacity: 0; transition: opacity 0.3s; pointer-events: none;
-  }
-  .division-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(249,115,22,0.35);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 40px rgba(249,115,22,0.07);
-  }
-  .division-card:hover::after { opacity: 1; }
+/* ── REVEAL ANIMATIONS ── */
+.reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal-left.visible { opacity: 1; transform: none; }
+.reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal-right.visible { opacity: 1; transform: none; }
+.reveal-scale { opacity: 0; transform: scale(0.85); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
 
-  .div-icon {
-    width: 54px; height: 54px;
-    background: linear-gradient(135deg, var(--orange), var(--yellow));
-    border-radius: 14px; display: flex; align-items: center; justify-content: center;
-    font-size: 1.55rem; margin-bottom: 1.6rem;
-    box-shadow: 0 8px 28px rgba(249,115,22,0.35);
-  }
+/* ── ABOUT ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.about-text p { color: #8a8a8a; line-height: 1.9; margin-bottom: 1.2rem; font-size: 0.97rem; font-weight: 300; }
 
-  .div-name {
-    font-family: 'Bebas Neue', cursive; font-size: 1.75rem; letter-spacing: 2px;
-    background: linear-gradient(135deg, var(--orange), var(--yellow));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    margin-bottom: 0.3rem; line-height: 1;
-  }
-  .div-tagline { font-size: 0.72rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 1.2rem; font-weight: 600; }
-  .div-desc { color: #888; font-size: 0.9rem; line-height: 1.82; font-weight: 300; }
+.est-pill {
+  display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 1.8rem;
+  background: rgba(249,115,22,0.07); border: 1px solid rgba(249,115,22,0.22);
+  border-radius: 8px; padding: 0.75rem 1.3rem; font-size: 0.87rem; color: #999;
+  animation: glowPill 3s ease-in-out infinite;
+}
+@keyframes glowPill { 0%,100% { box-shadow: 0 0 0 rgba(249,115,22,0); } 50% { box-shadow: 0 0 20px rgba(249,115,22,0.15); } }
+.est-pill strong { color: var(--orange); }
 
-  .div-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.6rem; }
-  .tag {
-    background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.2);
-    color: var(--orange); font-size: 0.7rem; padding: 0.28rem 0.8rem;
-    border-radius: 100px; letter-spacing: 0.5px; font-weight: 500;
-  }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
 
-  /* TEAM */
-  .team-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem; margin-top: 3.5rem;
-  }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.8rem 1.6rem;
+  position: relative; overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s, box-shadow 0.4s;
+}
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(to bottom, var(--orange), var(--yellow));
+}
+.stat-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(249,115,22,0.04), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.stat-card:hover { transform: translateY(-6px) scale(1.02); border-color: rgba(249,115,22,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.stat-card:hover::after { opacity: 1; }
 
-  .team-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 20px; padding: 2.8rem 2rem 2.4rem;
-    text-align: center; position: relative; overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-  }
-  .team-card::before {
-    content: ''; position: absolute;
-    top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(to right, var(--orange), var(--yellow));
-  }
-  .team-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(249,115,22,0.35);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(249,115,22,0.07);
-  }
+.stat-num {
+  font-family: 'Bebas Neue', cursive; font-size: 2.8rem; line-height: 1;
+  background: linear-gradient(135deg, var(--orange), var(--yellow));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 0.35rem;
+}
+.stat-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
 
-  .team-avatar {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--orange), var(--yellow));
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Bebas Neue', cursive; font-size: 1.7rem;
-    color: #000; margin: 0 auto 1.4rem;
-    box-shadow: 0 8px 30px rgba(249,115,22,0.3);
-    letter-spacing: 1px;
-  }
+/* ── DIVISIONS ── */
+.divisions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
 
-  .team-name { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--text); margin-bottom: 0.4rem; }
+.division-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; padding: 2.5rem 2rem;
+  position: relative; overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s, box-shadow 0.4s;
+}
+.division-card .card-glow {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(249,115,22,0.06), transparent 60%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.division-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(249,115,22,0.4);
+  box-shadow: 0 28px 70px rgba(0,0,0,0.5), 0 0 50px rgba(249,115,22,0.08);
+}
+.division-card:hover .card-glow { opacity: 1; }
 
-  .team-role {
-    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 1.2rem;
-    background: linear-gradient(135deg, var(--orange), var(--yellow));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
+.div-icon {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, var(--orange), var(--yellow));
+  border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; margin-bottom: 1.6rem;
+  box-shadow: 0 8px 28px rgba(249,115,22,0.35);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+}
+.division-card:hover .div-icon { transform: scale(1.1) rotate(5deg); box-shadow: 0 14px 40px rgba(249,115,22,0.5); }
 
-  .team-divline { width: 40px; height: 1px; background: linear-gradient(to right, var(--orange), var(--yellow)); margin: 0 auto 1.2rem; }
+.div-name {
+  font-family: 'Bebas Neue', cursive; font-size: 1.75rem; letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--orange), var(--yellow));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 0.3rem; line-height: 1;
+}
+.div-tagline { font-size: 0.72rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 1.2rem; font-weight: 600; }
+.div-desc { color: #888; font-size: 0.9rem; line-height: 1.82; font-weight: 300; }
 
-  .team-bio { font-size: 0.88rem; color: #888; line-height: 1.78; font-weight: 300; }
+.div-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.6rem; }
+.tag {
+  background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.2);
+  color: var(--orange); font-size: 0.7rem; padding: 0.28rem 0.8rem;
+  border-radius: 100px; letter-spacing: 0.5px; font-weight: 500;
+  transition: background 0.3s, transform 0.3s;
+}
+.tag:hover { background: rgba(249,115,22,0.15); transform: translateY(-2px); }
 
-  /* CONTACT */
-  .contact-wrap { max-width: 640px; margin: 3rem auto 0; }
+/* ── TEAM ── */
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; }
 
-  .contact-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 22px; padding: 3.5rem 3rem;
-    position: relative; overflow: hidden;
-  }
-  .contact-card::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249,115,22,0.06), transparent 70%);
-    pointer-events: none;
-  }
+.team-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 24px; overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s, box-shadow 0.4s;
+  position: relative;
+}
+.team-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(249,115,22,0.4);
+  box-shadow: 0 28px 70px rgba(0,0,0,0.5), 0 0 60px rgba(249,115,22,0.08);
+}
 
-  .contact-card h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.8rem; color: var(--text); }
-  .contact-card > p { color: #888; font-size: 0.95rem; line-height: 1.8; margin-bottom: 2.2rem; font-weight: 300; }
+/* Illustrated person avatar area */
+.team-avatar-area {
+  height: 240px; position: relative; overflow: hidden;
+  background: linear-gradient(160deg, #161616, #0f0f0f);
+  display: flex; align-items: flex-end; justify-content: center;
+}
 
-  .mail-btn {
-    display: inline-flex; align-items: center; gap: 0.8rem;
-    background: linear-gradient(135deg, var(--orange), var(--yellow));
-    color: #000; font-weight: 700; font-size: 0.92rem;
-    padding: 1rem 2.4rem; border-radius: 9px; text-decoration: none;
-    letter-spacing: 0.5px; transition: transform 0.25s, box-shadow 0.25s;
-    box-shadow: 0 0 40px rgba(249,115,22,0.35);
-  }
-  .mail-btn:hover { transform: translateY(-3px); box-shadow: 0 0 65px rgba(249,115,22,0.55); }
-  .mail-note { font-size: 0.78rem; color: #444; margin-top: 1.4rem; }
+/* Ground / floor for the illustration */
+.avatar-ground {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 30px;
+  background: linear-gradient(to top, rgba(249,115,22,0.08), transparent);
+  border-top: 1px solid rgba(249,115,22,0.15);
+}
 
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2.5rem 6%;
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 1.5rem;
-  }
-  .foot-copy { font-size: 0.78rem; color: #444; }
-  .foot-links { display: flex; list-style: none; gap: 2rem; }
-  .foot-links a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 1px; transition: color 0.3s; }
-  .foot-links a:hover { color: var(--orange); }
+/* Floating glow behind person */
+.avatar-glow {
+  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(249,115,22,0.2), transparent 70%);
+  filter: blur(20px);
+  animation: avatarGlowPulse 3s ease-in-out infinite;
+}
+@keyframes avatarGlowPulse { 0%,100% { opacity: 0.6; transform: translateX(-50%) scale(1); } 50% { opacity: 1; transform: translateX(-50%) scale(1.2); } }
 
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .about-grid, .divisions-grid, .team-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .about-grid { gap: 3rem; }
-  }
-  @media (max-width: 680px) {
-    nav ul { display: none; }
-    .hamburger { display: flex; }
-    .section { padding: 5rem 5%; }
-    .contact-card { padding: 2.5rem 1.8rem; }
-    footer { justify-content: center; text-align: center; }
-  }
+/* SVG person illustration */
+.person-svg { position: relative; z-index: 2; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+.team-card:hover .person-svg { transform: translateY(-8px); }
+
+/* Role badge on image */
+.team-role-badge {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.3);
+  color: var(--orange); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; padding: 0.3rem 0.7rem;
+  border-radius: 100px;
+  animation: badgePulse 3s ease-in-out infinite;
+}
+@keyframes badgePulse { 0%,100% { box-shadow: 0 0 0 rgba(249,115,22,0); } 50% { box-shadow: 0 0 16px rgba(249,115,22,0.3); } }
+
+/* Animated dots top-left */
+.team-dots {
+  position: absolute; top: 14px; left: 16px;
+  display: flex; gap: 6px;
+}
+.team-dots span {
+  width: 8px; height: 8px; border-radius: 50%;
+  animation: dotBlink 2s ease-in-out infinite;
+}
+.team-dots span:nth-child(1) { background: var(--orange); animation-delay: 0s; }
+.team-dots span:nth-child(2) { background: var(--yellow); animation-delay: 0.3s; }
+.team-dots span:nth-child(3) { background: rgba(249,115,22,0.3); animation-delay: 0.6s; }
+@keyframes dotBlink { 0%,100% { opacity: 0.4; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1); } }
+
+/* Card bottom info */
+.team-info { padding: 1.6rem 1.8rem 2rem; position: relative; }
+.team-info::before {
+  content: ''; position: absolute; top: 0; left: 1.8rem; right: 1.8rem;
+  height: 1px; background: linear-gradient(to right, var(--orange), var(--yellow));
+}
+
+.team-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 0.3rem; }
+.team-role {
+  font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700;
+  background: linear-gradient(135deg, var(--orange), var(--yellow));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 1rem;
+}
+.team-bio { font-size: 0.87rem; color: #777; line-height: 1.78; font-weight: 300; }
+
+/* ── CONTACT ── */
+.contact-wrap { max-width: 660px; margin: 3rem auto 0; }
+.contact-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 24px; padding: 3.5rem 3rem;
+  position: relative; overflow: hidden;
+  transition: border-color 0.4s, box-shadow 0.4s;
+}
+.contact-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249,115,22,0.07), transparent 70%);
+  pointer-events: none;
+}
+.contact-card:hover { border-color: rgba(249,115,22,0.2); box-shadow: 0 0 60px rgba(249,115,22,0.05); }
+.contact-card h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.8rem; color: var(--text); }
+.contact-card > p { color: #888; font-size: 0.95rem; line-height: 1.8; margin-bottom: 2.2rem; font-weight: 300; }
+
+.mail-btn {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  background: linear-gradient(135deg, var(--orange), var(--yellow));
+  color: #000; font-weight: 700; font-size: 0.92rem;
+  padding: 1.1rem 2.6rem; border-radius: 9px; text-decoration: none;
+  letter-spacing: 0.5px; transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 40px rgba(249,115,22,0.35);
+  position: relative; overflow: hidden;
+}
+.mail-btn::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-100%); transition: 0.4s;
+}
+.mail-btn:hover::before { transform: translateX(100%); }
+.mail-btn:hover { transform: translateY(-3px); box-shadow: 0 0 70px rgba(249,115,22,0.6); }
+.mail-note { font-size: 0.78rem; color: #444; margin-top: 1.4rem; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border); padding: 2.5rem 6%;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.foot-copy { font-size: 0.78rem; color: #444; }
+.foot-links { display: flex; list-style: none; gap: 2rem; }
+.foot-links a {
+  color: var(--muted); text-decoration: none; font-size: 0.78rem;
+  letter-spacing: 1px; transition: color 0.3s;
+  position: relative;
+}
+.foot-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--orange); transition: width 0.3s; }
+.foot-links a:hover { color: var(--orange); }
+.foot-links a:hover::after { width: 100%; }
+
+/* ── COUNTER ANIMATION ── */
+.count-num { display: inline-block; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .divisions-grid, .team-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 680px) {
+  nav ul { display: none; }
+  .hamburger { display: flex; }
+  .section { padding: 5rem 5%; }
+  .contact-card { padding: 2.5rem 1.8rem; }
+  footer { justify-content: center; text-align: center; }
+  .cursor, .cursor-ring { display: none; }
+  body { cursor: auto; }
+}
 </style>
 </head>
 <body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- NAV -->
 <nav id="navbar">
   <a href="#" class="logo-wrap">
     <svg class="logo-icon" viewBox="0 0 44 44" fill="none">
       <rect width="44" height="44" rx="9" fill="#000"/>
-      <polygon points="25,4 13,23 22,23 19,40 31,21 22,21" fill="url(#lg1)"/>
+      <polygon points="25,4 13,23 22,23 19,40 31,21 22,21" fill="url(#navLg)"/>
       <defs>
-        <linearGradient id="lg1" x1="13" y1="4" x2="31" y2="40" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#f97316"/>
-          <stop offset="100%" stop-color="#fbbf24"/>
+        <linearGradient id="navLg" x1="13" y1="4" x2="31" y2="40" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#fbbf24"/>
         </linearGradient>
       </defs>
     </svg>
@@ -420,7 +592,6 @@
       <span class="logo-sub">DEVELOP</span>
     </div>
   </a>
-
   <ul>
     <li><a href="#about">About</a></li>
     <li><a href="#divisions">Divisions</a></li>
@@ -428,13 +599,9 @@
     <li><a href="#contact">Contact</a></li>
     <li><a href="mailto:mailattvarun@gmail.com" class="nav-cta">Get In Touch</a></li>
   </ul>
-
-  <button class="hamburger" id="burgerBtn" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="hamburger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about">About</a>
   <a href="#divisions">Divisions</a>
@@ -445,19 +612,37 @@
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-glow"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
   <div class="grid-bg"></div>
+  <div class="particles" id="particles"></div>
+
   <div class="hero-inner">
-    <div class="hero-badge">⚡ Technology &amp; Digital Solutions</div>
+    <div class="hero-badge">⚡ Technology &amp; Digital Solutions — Est. 30 Nov 2025</div>
+
+    <div class="hero-tagline">
+      <span class="tagline-word">THINK.</span>
+      <span class="tagline-word">BUILD.</span>
+      <span class="tagline-word">CONQUER.</span>
+    </div>
+
     <h1 class="hero-title">
       <span class="line1">BUILD WHAT</span>
       <span class="line2">MATTERS</span>
     </h1>
+
     <p class="hero-desc">We turn your ideas into real digital products — from concept to launch. Software, apps, design, and startup support under one roof.</p>
+
     <div class="hero-btns">
       <a href="#divisions" class="btn-primary">Explore Divisions</a>
       <a href="#contact" class="btn-outline">Start a Project</a>
     </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
   </div>
 </div>
 
@@ -465,42 +650,38 @@
 <section id="about" class="section">
   <div class="section-inner">
     <div class="about-grid">
-
-      <div class="reveal">
+      <div class="reveal-left">
         <div class="section-label">About Us</div>
         <h2 class="section-title">We Build Digital Products That <span class="grad">Drive Growth</span></h2>
         <div class="about-text">
           <p>ZYNEXA DEVELOP is a technology and digital solutions company focused on helping individuals, startups, and businesses turn their ideas into real products.</p>
           <p>We provide end-to-end services including software development, web and mobile application development, UI/UX design, product design, and digital system solutions.</p>
           <p>Our mission is to solve real-world problems through innovative technology and creative design. We work closely with our clients to understand their needs and build scalable, reliable, and user-friendly digital products.</p>
-          <p>At ZYNEXA DEVELOP, we believe that great ideas deserve the right technology and support to grow. Our goal is to empower people and organizations by building powerful digital solutions that drive progress and success.</p>
+          <p>At ZYNEXA DEVELOP, we believe great ideas deserve the right technology and support to grow — empowering people and organizations through powerful digital solutions.</p>
         </div>
-        <div class="est-pill">
-          📅 &nbsp;<strong>Established:</strong>&nbsp;30 November 2025
-        </div>
+        <div class="est-pill">📅 &nbsp;<strong>Established:</strong>&nbsp; 30 November 2025</div>
       </div>
 
-      <div class="reveal" style="transition-delay:0.15s; display:flex; align-items:center;">
+      <div class="reveal-right" style="display:flex; align-items:center;">
         <div class="stats-grid" style="width:100%;">
-          <div class="stat-card">
-            <div class="stat-num">3+</div>
+          <div class="stat-card reveal-scale" style="transition-delay:0.1s;">
+            <div class="stat-num" data-target="3">0</div>
             <div class="stat-label">Core Divisions</div>
           </div>
-          <div class="stat-card">
+          <div class="stat-card reveal-scale" style="transition-delay:0.2s;">
             <div class="stat-num">360°</div>
             <div class="stat-label">End-to-End</div>
           </div>
-          <div class="stat-card">
+          <div class="stat-card reveal-scale" style="transition-delay:0.3s;">
             <div class="stat-num">∞</div>
             <div class="stat-label">Scalable Vision</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-num">100%</div>
+          <div class="stat-card reveal-scale" style="transition-delay:0.4s;">
+            <div class="stat-num" data-target="100">0</div>
             <div class="stat-label">Client-Focused</div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -513,12 +694,12 @@
     <div class="text-center reveal">
       <div class="section-label centered">Our Divisions</div>
       <h2 class="section-title">Three Pillars of <span class="grad">Innovation</span></h2>
-      <p style="color:#777; max-width:480px; margin: 0.5rem auto 0; font-size: 0.95rem; line-height: 1.85; font-weight: 300;">Every division serves a unique need — together, they cover everything your digital journey demands.</p>
+      <p style="color:#666; max-width:480px; margin:0.5rem auto 0; font-size:0.95rem; line-height:1.85; font-weight:300;">Every division serves a unique need — together, they cover everything your digital journey demands.</p>
     </div>
 
     <div class="divisions-grid">
-
-      <div class="division-card reveal">
+      <div class="division-card reveal" style="transition-delay:0.1s;">
+        <div class="card-glow"></div>
         <div class="div-icon">⚡</div>
         <div class="div-name">ZYNEXA TECH</div>
         <div class="div-tagline">Engineering &amp; Development</div>
@@ -531,7 +712,8 @@
         </div>
       </div>
 
-      <div class="division-card reveal" style="transition-delay:0.15s;">
+      <div class="division-card reveal" style="transition-delay:0.2s;">
+        <div class="card-glow"></div>
         <div class="div-icon">🎨</div>
         <div class="div-name">ZYNEXA STUDIO</div>
         <div class="div-tagline">Design &amp; Brand Identity</div>
@@ -545,6 +727,7 @@
       </div>
 
       <div class="division-card reveal" style="transition-delay:0.3s;">
+        <div class="card-glow"></div>
         <div class="div-icon">🚀</div>
         <div class="div-name">ZYNEXA FOUNDERS</div>
         <div class="div-tagline">Startup &amp; Business Support</div>
@@ -556,7 +739,6 @@
           <span class="tag">Growth Marketing</span>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -569,33 +751,248 @@
     <div class="text-center reveal">
       <div class="section-label centered">The People Behind It</div>
       <h2 class="section-title">Meet Our <span class="grad">Founding Team</span></h2>
-      <p style="color:#777; max-width:500px; margin:0.5rem auto 0; font-size:0.95rem; line-height:1.85; font-weight:300;">Three visionaries who came together on 30 November 2025 to build technology that empowers people and organizations.</p>
+      <p style="color:#666; max-width:500px; margin:0.5rem auto 0; font-size:0.95rem; line-height:1.85; font-weight:300;">Three visionaries who came together on 30 November 2025 to build technology that empowers people and organizations.</p>
     </div>
 
     <div class="team-grid">
 
-      <div class="team-card reveal">
-        <div class="team-avatar">VS</div>
-        <div class="team-name">Varun. S</div>
-        <div class="team-role">Founder &amp; CEO</div>
-        <div class="team-divline"></div>
-        <p class="team-bio">Visionary leader driving ZYNEXA's mission to empower individuals and businesses through transformative digital solutions. The driving force behind ZYNEXA DEVELOP's inception and overall strategic direction.</p>
+      <!-- VARUN — CEO -->
+      <div class="team-card reveal" style="transition-delay:0.1s;">
+        <div class="team-avatar-area">
+          <div class="team-dots"><span></span><span></span><span></span></div>
+          <div class="team-role-badge">CEO</div>
+          <div class="avatar-glow"></div>
+          <!-- Illustrated person: Varun — formal, confident pose -->
+          <svg class="person-svg" width="150" height="200" viewBox="0 0 150 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Shadow -->
+            <ellipse cx="75" cy="196" rx="38" ry="5" fill="rgba(249,115,22,0.15)"/>
+            <!-- Legs -->
+            <rect x="58" y="148" width="14" height="46" rx="7" fill="#1a1a1a"/>
+            <rect x="78" y="148" width="14" height="46" rx="7" fill="#1a1a1a"/>
+            <!-- Shoes -->
+            <ellipse cx="65" cy="193" rx="12" ry="5" fill="#0d0d0d"/>
+            <ellipse cx="85" cy="193" rx="12" ry="5" fill="#0d0d0d"/>
+            <!-- Body / Suit jacket -->
+            <rect x="48" y="90" width="54" height="65" rx="10" fill="#1c1c1c"/>
+            <!-- Suit lapels -->
+            <path d="M75 95 L60 105 L68 110 L75 100Z" fill="#141414"/>
+            <path d="M75 95 L90 105 L82 110 L75 100Z" fill="#141414"/>
+            <!-- Tie -->
+            <path d="M75 100 L72 115 L75 120 L78 115Z" fill="url(#tieGrad)"/>
+            <defs>
+              <linearGradient id="tieGrad" x1="72" y1="100" x2="78" y2="120" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#fbbf24"/>
+              </linearGradient>
+              <linearGradient id="skinGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c8956c"/><stop offset="100%" stop-color="#a0714a"/>
+              </linearGradient>
+              <linearGradient id="skinGrad2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c8956c"/><stop offset="100%" stop-color="#b07a50"/>
+              </linearGradient>
+            </defs>
+            <!-- Shirt collar -->
+            <path d="M67 95 L75 100 L83 95 L80 90 L75 93 L70 90Z" fill="#f0f0f0"/>
+            <!-- Neck -->
+            <rect x="69" y="75" width="12" height="18" rx="6" fill="#c8956c"/>
+            <!-- Head -->
+            <ellipse cx="75" cy="62" rx="24" ry="27" fill="#c8956c"/>
+            <!-- Hair -->
+            <path d="M51 58 Q53 34 75 32 Q97 34 99 58 Q97 40 75 38 Q53 40 51 58Z" fill="#1a0a00"/>
+            <!-- Side hair -->
+            <path d="M51 58 Q49 65 51 72 Q50 60 53 56Z" fill="#1a0a00"/>
+            <path d="M99 58 Q101 65 99 72 Q100 60 97 56Z" fill="#1a0a00"/>
+            <!-- Eyes -->
+            <ellipse cx="66" cy="62" rx="4" ry="4.5" fill="white"/>
+            <ellipse cx="84" cy="62" rx="4" ry="4.5" fill="white"/>
+            <circle cx="67" cy="63" r="2.5" fill="#1a0a00"/>
+            <circle cx="85" cy="63" r="2.5" fill="#1a0a00"/>
+            <circle cx="68" cy="62" r="0.8" fill="white"/>
+            <circle cx="86" cy="62" r="0.8" fill="white"/>
+            <!-- Eyebrows -->
+            <path d="M61 57 Q66 54 71 57" stroke="#1a0a00" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <path d="M79 57 Q84 54 89 57" stroke="#1a0a00" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <!-- Nose -->
+            <path d="M73 68 Q75 73 77 68" stroke="#a0714a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            <!-- Smile -->
+            <path d="M66 76 Q75 83 84 76" stroke="#8a5a35" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <!-- Arms -->
+            <rect x="36" y="92" width="13" height="50" rx="6" fill="#1c1c1c"/>
+            <rect x="101" y="92" width="13" height="50" rx="6" fill="#1c1c1c"/>
+            <!-- Hands -->
+            <ellipse cx="42" cy="145" rx="8" ry="9" fill="#c8956c"/>
+            <ellipse cx="108" cy="145" rx="8" ry="9" fill="#c8956c"/>
+            <!-- Suit buttons -->
+            <circle cx="75" cy="122" r="2" fill="#2a2a2a"/>
+            <circle cx="75" cy="132" r="2" fill="#2a2a2a"/>
+            <!-- Orange shoulder stripe -->
+            <path d="M48 90 L61 90" stroke="url(#tieGrad)" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M89 90 L102 90" stroke="url(#tieGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <div class="avatar-ground"></div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Varun. S</div>
+          <div class="team-role">Founder &amp; CEO</div>
+          <p class="team-bio">Visionary leader driving ZYNEXA's mission. The driving force behind ZYNEXA DEVELOP's inception and overall strategic direction.</p>
+        </div>
       </div>
 
-      <div class="team-card reveal" style="transition-delay:0.15s;">
-        <div class="team-avatar" style="font-size:1.3rem; letter-spacing:0;">VV</div>
-        <div class="team-name">Vishnu Vardhan. A.S</div>
-        <div class="team-role">Co-Founder &amp; CPO</div>
-        <div class="team-divline"></div>
-        <p class="team-bio">Product strategist shaping ZYNEXA's offerings with a sharp eye for user needs, market fit, and building products people love to use. Champions the product vision across all three divisions.</p>
+      <!-- VISHNU — CPO -->
+      <div class="team-card reveal" style="transition-delay:0.2s;">
+        <div class="team-avatar-area">
+          <div class="team-dots"><span></span><span></span><span></span></div>
+          <div class="team-role-badge">CPO</div>
+          <div class="avatar-glow"></div>
+          <!-- Illustrated person: Vishnu — product person, casual-smart -->
+          <svg class="person-svg" width="150" height="200" viewBox="0 0 150 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="shirtGrad" x1="48" y1="90" x2="102" y2="155" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#f97316" stop-opacity="0.9"/><stop offset="100%" stop-color="#c05c10"/>
+              </linearGradient>
+              <linearGradient id="tieGrad2" x1="72" y1="100" x2="78" y2="120" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f97316"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="75" cy="196" rx="38" ry="5" fill="rgba(249,115,22,0.15)"/>
+            <!-- Legs / pants -->
+            <rect x="58" y="148" width="14" height="46" rx="7" fill="#222"/>
+            <rect x="78" y="148" width="14" height="46" rx="7" fill="#222"/>
+            <ellipse cx="65" cy="193" rx="12" ry="5" fill="#111"/>
+            <ellipse cx="85" cy="193" rx="12" ry="5" fill="#111"/>
+            <!-- Body — orange polo shirt -->
+            <rect x="48" y="90" width="54" height="65" rx="10" fill="url(#shirtGrad)"/>
+            <!-- Collar -->
+            <path d="M68 90 L75 98 L82 90 L79 86 L75 89 L71 86Z" fill="#d06010"/>
+            <!-- Pocket -->
+            <rect x="82" y="105" width="12" height="10" rx="3" fill="rgba(0,0,0,0.2)"/>
+            <!-- Neck -->
+            <rect x="69" y="75" width="12" height="18" rx="6" fill="#b07a50"/>
+            <!-- Head -->
+            <ellipse cx="75" cy="62" rx="24" ry="27" fill="#b07a50"/>
+            <!-- Hair — slightly wavy -->
+            <path d="M51 55 Q55 30 75 30 Q95 30 99 55 Q97 38 75 36 Q53 38 51 55Z" fill="#0d0500"/>
+            <path d="M51 55 Q48 64 50 72 Q50 58 54 52Z" fill="#0d0500"/>
+            <path d="M99 55 Q102 64 100 72 Q100 58 96 52Z" fill="#0d0500"/>
+            <!-- Ears -->
+            <ellipse cx="51" cy="66" rx="5" ry="7" fill="#b07a50"/>
+            <ellipse cx="99" cy="66" rx="5" ry="7" fill="#b07a50"/>
+            <!-- Eyes -->
+            <ellipse cx="65" cy="63" rx="4.5" ry="4.5" fill="white"/>
+            <ellipse cx="85" cy="63" rx="4.5" ry="4.5" fill="white"/>
+            <circle cx="66" cy="64" r="2.8" fill="#1a0800"/>
+            <circle cx="86" cy="64" r="2.8" fill="#1a0800"/>
+            <circle cx="67" cy="63" r="0.9" fill="white"/>
+            <circle cx="87" cy="63" r="0.9" fill="white"/>
+            <!-- Eyebrows — thicker -->
+            <path d="M59 57 Q65 53 71 57" stroke="#0d0500" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <path d="M79 57 Q85 53 91 57" stroke="#0d0500" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <!-- Nose -->
+            <path d="M72 69 Q75 75 78 69" stroke="#8a5a35" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+            <!-- Wide smile -->
+            <path d="M64 77 Q75 86 86 77" stroke="#7a4a25" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <!-- Arms -->
+            <rect x="36" y="92" width="13" height="50" rx="6" fill="#c05c10"/>
+            <rect x="101" y="92" width="13" height="50" rx="6" fill="#c05c10"/>
+            <!-- Hands — one holding clipboard idea -->
+            <ellipse cx="42" cy="145" rx="8" ry="9" fill="#b07a50"/>
+            <ellipse cx="108" cy="145" rx="8" ry="9" fill="#b07a50"/>
+            <!-- Little notepad in hand -->
+            <rect x="100" y="132" width="22" height="28" rx="3" fill="#f0f0f0"/>
+            <line x1="104" y1="138" x2="118" y2="138" stroke="#999" stroke-width="1"/>
+            <line x1="104" y1="143" x2="118" y2="143" stroke="#999" stroke-width="1"/>
+            <line x1="104" y1="148" x2="114" y2="148" stroke="url(#tieGrad2)" stroke-width="1.5"/>
+          </svg>
+          <div class="avatar-ground"></div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Vishnu Vardhan. A.S</div>
+          <div class="team-role">Co-Founder &amp; CPO</div>
+          <p class="team-bio">Product strategist with a sharp eye for user needs and market fit. Champions the product vision across all three ZYNEXA divisions.</p>
+        </div>
       </div>
 
+      <!-- AMIRTANAND — CTO -->
       <div class="team-card reveal" style="transition-delay:0.3s;">
-        <div class="team-avatar">AM</div>
-        <div class="team-name">Amirtanand</div>
-        <div class="team-role">Co-Founder &amp; CTO</div>
-        <div class="team-divline"></div>
-        <p class="team-bio">Tech architect behind ZYNEXA's engineering backbone — building scalable, reliable systems and leading the technical vision from the ground up with precision and innovation.</p>
+        <div class="team-avatar-area">
+          <div class="team-dots"><span></span><span></span><span></span></div>
+          <div class="team-role-badge">CTO</div>
+          <div class="avatar-glow"></div>
+          <!-- Illustrated person: Amirtanand — tech, hoodie -->
+          <svg class="person-svg" width="150" height="200" viewBox="0 0 150 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="hoodieGrad" x1="45" y1="85" x2="105" y2="160" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/>
+              </linearGradient>
+              <linearGradient id="hoodieAccent" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#fbbf24"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="75" cy="196" rx="38" ry="5" fill="rgba(249,115,22,0.15)"/>
+            <!-- Legs -->
+            <rect x="58" y="148" width="14" height="46" rx="7" fill="#181818"/>
+            <rect x="78" y="148" width="14" height="46" rx="7" fill="#181818"/>
+            <ellipse cx="65" cy="193" rx="12" ry="5" fill="#0d0d0d"/>
+            <ellipse cx="85" cy="193" rx="12" ry="5" fill="#0d0d0d"/>
+            <!-- Hoodie body -->
+            <rect x="45" y="88" width="60" height="65" rx="12" fill="url(#hoodieGrad)"/>
+            <!-- Hoodie pocket -->
+            <rect x="60" y="128" width="30" height="18" rx="8" fill="rgba(255,255,255,0.05)"/>
+            <!-- Hoodie zipper -->
+            <line x1="75" y1="95" x2="75" y2="135" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+            <!-- Orange stripe on sleeve -->
+            <rect x="45" y="108" width="60" height="3" rx="1" fill="url(#hoodieAccent)" opacity="0.5"/>
+            <!-- Hoodie hood rim -->
+            <path d="M58 88 Q75 80 92 88" stroke="rgba(255,255,255,0.08)" stroke-width="2" fill="none"/>
+            <!-- Arms -->
+            <rect x="33" y="90" width="13" height="52" rx="6" fill="#1a1a1a"/>
+            <rect x="104" y="90" width="13" height="52" rx="6" fill="#1a1a1a"/>
+            <!-- Orange cuff stripes -->
+            <rect x="33" y="128" width="13" height="4" rx="2" fill="url(#hoodieAccent)" opacity="0.7"/>
+            <rect x="104" y="128" width="13" height="4" rx="2" fill="url(#hoodieAccent)" opacity="0.7"/>
+            <!-- Hands -->
+            <ellipse cx="39" cy="148" rx="8" ry="9" fill="#b5835a"/>
+            <ellipse cx="111" cy="148" rx="8" ry="9" fill="#b5835a"/>
+            <!-- Laptop in hands -->
+            <rect x="95" y="132" width="30" height="20" rx="3" fill="#222"/>
+            <rect x="97" y="134" width="26" height="14" rx="2" fill="#0d0d0d"/>
+            <!-- Code lines on laptop screen -->
+            <line x1="100" y1="138" x2="113" y2="138" stroke="url(#hoodieAccent)" stroke-width="1.2"/>
+            <line x1="100" y1="142" x2="119" y2="142" stroke="rgba(249,115,22,0.4)" stroke-width="1"/>
+            <line x1="100" y1="146" x2="108" y2="146" stroke="rgba(251,191,36,0.5)" stroke-width="1"/>
+            <!-- Neck -->
+            <rect x="70" y="75" width="10" height="16" rx="5" fill="#b5835a"/>
+            <!-- Head -->
+            <ellipse cx="75" cy="62" rx="23" ry="26" fill="#b5835a"/>
+            <!-- Hair — short with slight fade -->
+            <path d="M52 58 Q54 34 75 32 Q96 34 98 58 Q96 38 75 36 Q54 38 52 58Z" fill="#050000"/>
+            <path d="M52 58 Q50 66 52 72 Q51 60 55 55Z" fill="#050000"/>
+            <path d="M98 58 Q100 66 98 72 Q99 60 95 55Z" fill="#050000"/>
+            <!-- Glasses -->
+            <rect x="57" y="58" rx="6" ry="6" width="14" height="12" fill="none" stroke="rgba(249,115,22,0.7)" stroke-width="1.8"/>
+            <rect x="79" y="58" rx="6" ry="6" width="14" height="12" fill="none" stroke="rgba(249,115,22,0.7)" stroke-width="1.8"/>
+            <line x1="71" y1="63" x2="79" y2="63" stroke="rgba(249,115,22,0.7)" stroke-width="1.5"/>
+            <line x1="51" y1="63" x2="57" y2="63" stroke="rgba(249,115,22,0.5)" stroke-width="1.2"/>
+            <line x1="93" y1="63" x2="99" y2="63" stroke="rgba(249,115,22,0.5)" stroke-width="1.2"/>
+            <!-- Eyes behind glasses -->
+            <circle cx="64" cy="64" r="2.5" fill="#1a0800"/>
+            <circle cx="86" cy="64" r="2.5" fill="#1a0800"/>
+            <circle cx="65" cy="63" r="0.8" fill="white"/>
+            <circle cx="87" cy="63" r="0.8" fill="white"/>
+            <!-- Eyebrows -->
+            <path d="M59 56 Q64 53 70 56" stroke="#050000" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <path d="M80 56 Q85 53 91 56" stroke="#050000" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <!-- Nose -->
+            <path d="M73 69 Q75 74 77 69" stroke="#8a5a35" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            <!-- Focused expression / slight smirk -->
+            <path d="M67 77 Q75 82 83 79" stroke="#7a4a25" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+          <div class="avatar-ground"></div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Amirtanand.D</div>
+          <div class="team-role">Co-Founder &amp; CTO</div>
+          <p class="team-bio">Tech architect behind ZYNEXA's engineering backbone — building scalable systems and leading the technical vision from the ground up.</p>
+        </div>
       </div>
 
     </div>
@@ -611,7 +1008,6 @@
       <div class="section-label centered">Get In Touch</div>
       <h2 class="section-title">Let's Build Something <span class="grad">Great Together</span></h2>
     </div>
-
     <div class="contact-wrap reveal" style="transition-delay:0.15s;">
       <div class="contact-card">
         <h3>Have an idea? We'd love to hear it.</h3>
@@ -630,11 +1026,10 @@
   <a href="#" class="logo-wrap" style="text-decoration:none;">
     <svg width="38" height="38" viewBox="0 0 44 44" fill="none">
       <rect width="44" height="44" rx="9" fill="#000"/>
-      <polygon points="25,4 13,23 22,23 19,40 31,21 22,21" fill="url(#lg2)"/>
+      <polygon points="25,4 13,23 22,23 19,40 31,21 22,21" fill="url(#footLg)"/>
       <defs>
-        <linearGradient id="lg2" x1="13" y1="4" x2="31" y2="40" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#f97316"/>
-          <stop offset="100%" stop-color="#fbbf24"/>
+        <linearGradient id="footLg" x1="13" y1="4" x2="31" y2="40" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#fbbf24"/>
         </linearGradient>
       </defs>
     </svg>
@@ -643,9 +1038,7 @@
       <span class="logo-sub">DEVELOP</span>
     </div>
   </a>
-
   <p class="foot-copy">Est. 30 November 2025 &nbsp;·&nbsp; © 2025 ZYNEXA DEVELOP. All rights reserved.</p>
-
   <ul class="foot-links">
     <li><a href="#about">About</a></li>
     <li><a href="#divisions">Divisions</a></li>
@@ -655,39 +1048,138 @@
 </footer>
 
 <script>
-  // Scroll Reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const revealObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
-  revealEls.forEach(el => revealObs.observe(el));
+/* ── CURSOR ── */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
 
-  // Nav glow on scroll
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.style.borderBottomColor = window.scrollY > 60
-      ? 'rgba(249,115,22,0.2)' : 'var(--border)';
-  }, { passive: true });
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+});
 
-  // Hamburger
-  document.getElementById('burgerBtn').addEventListener('click', () => {
-    document.getElementById('mobileMenu').classList.toggle('open');
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+document.querySelectorAll('a, button, .stat-card, .division-card, .team-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '20px'; cursor.style.height = '20px';
+    ring.style.width = '54px'; ring.style.height = '54px';
+    ring.style.borderColor = 'rgba(251,191,36,0.7)';
   });
-
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const id = a.getAttribute('href');
-      if (!id || id === '#') return;
-      const target = document.querySelector(id);
-      if (target) {
-        e.preventDefault();
-        const offset = target.getBoundingClientRect().top + window.scrollY - 80;
-        window.scrollTo({ top: offset, behavior: 'smooth' });
-        document.getElementById('mobileMenu').classList.remove('open');
-      }
-    });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '12px'; cursor.style.height = '12px';
+    ring.style.width = '36px'; ring.style.height = '36px';
+    ring.style.borderColor = 'rgba(249,115,22,0.5)';
   });
+});
+
+/* ── PARTICLES ── */
+const particleContainer = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.bottom = Math.random() * 40 + '%';
+  p.style.setProperty('--dx', (Math.random() - 0.5) * 80 + 'px');
+  p.style.animationDuration = (4 + Math.random() * 6) + 's';
+  p.style.animationDelay = (Math.random() * 6) + 's';
+  p.style.width = p.style.height = (Math.random() > 0.5 ? 2 : 3) + 'px';
+  p.style.background = Math.random() > 0.5 ? '#f97316' : '#fbbf24';
+  particleContainer.appendChild(p);
+}
+
+/* ── SCROLL REVEAL ── */
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Counter animation for stat cards
+      const num = e.target.querySelector('[data-target]');
+      if (num) animateCounter(num);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => revObs.observe(el));
+
+/* Also observe stat cards directly */
+document.querySelectorAll('.stat-card').forEach(card => {
+  const num = card.querySelector('[data-target]');
+  if (num) {
+    const obs2 = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) animateCounter(num); });
+    }, { threshold: 0.5 });
+    obs2.observe(card);
+  }
+});
+
+function animateCounter(el) {
+  const target = parseInt(el.getAttribute('data-target'));
+  const suffix = el.textContent.includes('%') ? '%' : '+';
+  let start = 0; const duration = 1800;
+  const startTime = performance.now();
+  function update(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 4);
+    const current = Math.round(ease * target);
+    el.textContent = current + (target === 100 ? '%' : '+');
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target + (target === 100 ? '%' : '+');
+  }
+  requestAnimationFrame(update);
+  el.removeAttribute('data-target');
+}
+
+/* ── NAV SCROLL ── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+}, { passive: true });
+
+/* ── HAMBURGER ── */
+document.getElementById('burgerBtn').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (!id || id === '#') return;
+    const target = document.querySelector(id);
+    if (target) {
+      e.preventDefault();
+      const offset = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+      document.getElementById('mobileMenu').classList.remove('open');
+    }
+  });
+});
+
+/* ── TILT effect on cards ── */
+document.querySelectorAll('.division-card, .team-card, .stat-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `translateY(-6px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+  });
+  card.addEventListener('mouseenter', () => {
+    card.style.transition = 'transform 0.1s';
+  });
+});
 </script>
 </body>
 </html>
