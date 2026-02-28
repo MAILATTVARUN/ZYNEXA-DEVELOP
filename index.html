@@ -1,36 +1,826 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zynexa Develop</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZYNEXA DEVELOP</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #181818;
+    --orange: #f97316;
+    --yellow: #fbbf24;
+    --gold: #f59e0b;
+    --text: #f1f1f1;
+    --muted: #888;
+    --border: #222;
+    --glow: rgba(249,115,22,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 2px; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  /* SVG LOGO */
+  .logo-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .logo-text {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-sub {
+    font-size: 0.55rem;
+    letter-spacing: 4px;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    margin-top: -4px;
+    display: block;
+  }
+
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--orange);
+    transition: width 0.3s;
+  }
+
+  nav a:hover { color: var(--orange); }
+  nav a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    color: #000 !important;
+    padding: 0.5rem 1.4rem;
+    border-radius: 4px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    -webkit-text-fill-color: #000 !important;
+  }
+  .nav-cta::after { display: none; }
+  .nav-cta:hover { opacity: 0.9; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 60%, rgba(249,115,22,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 30% 30%, rgba(251,191,36,0.04) 0%, transparent 60%);
+  }
+
+  /* Grid lines */
+  .grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(249,115,22,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(249,115,22,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(249,115,22,0.1);
+    border: 1px solid rgba(249,115,22,0.3);
+    color: var(--orange);
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    padding: 0.4rem 1.2rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: 4px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.2s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-title .line1 { display: block; color: var(--text); }
+  .hero-title .line2 {
+    display: block;
+    background: linear-gradient(135deg, var(--orange) 30%, var(--yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.8;
+    font-weight: 300;
+    animation: fadeUp 0.8s 0.4s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.6s ease forwards;
+    opacity: 0;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    color: #000;
+    padding: 0.85rem 2.2rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(249,115,22,0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(249,115,22,0.5);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    padding: 0.85rem 2.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 7rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--orange);
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ABOUT */
+  #about { max-width: 1200px; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: #999;
+    line-height: 1.9;
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(249,115,22,0.3);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(to bottom, var(--orange), var(--yellow));
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 3rem;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* DIVISIONS */
+  #divisions { max-width: 1200px; }
+  .divisions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .division-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+
+  .division-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(249,115,22,0.4);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(249,115,22,0.08);
+  }
+
+  .division-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(249,115,22,0.04), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .division-card:hover::after { opacity: 1; }
+
+  .div-icon {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 30px rgba(249,115,22,0.3);
+  }
+
+  .div-name {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+
+  .div-tagline {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+  }
+
+  .div-desc {
+    color: #888;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .div-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .service-tag {
+    background: rgba(249,115,22,0.08);
+    border: 1px solid rgba(249,115,22,0.2);
+    color: var(--orange);
+    font-size: 0.72rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  /* DIVIDER */
+  .divider {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+  }
+
+  /* CONTACT */
+  #contact {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #contact::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(249,115,22,0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-card {
+    max-width: 600px;
+    margin: 3rem auto 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.8rem;
+  }
+
+  .contact-card p {
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .contact-mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    color: #000;
+    padding: 1rem 2.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 40px rgba(249,115,22,0.3);
+  }
+
+  .contact-mail:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 60px rgba(249,115,22,0.5);
+  }
+
+  .mail-icon { font-size: 1.1rem; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+  }
+
+  .footer-logo .logo-text { font-size: 1.2rem; }
+
+  footer p {
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--orange); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .divisions-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  /* Hamburger for mobile */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .hamburger span {
+    width: 24px; height: 2px;
+    background: var(--orange);
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-cta { display: none; }
+  }
+
+  /* Animated bolt glow */
+  @keyframes pulse-glow {
+    0%, 100% { filter: drop-shadow(0 0 6px #f97316); }
+    50% { filter: drop-shadow(0 0 18px #fbbf24); }
+  }
+  .logo-icon { animation: pulse-glow 3s ease-in-out infinite; }
+</style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Zynexa Develop</h1>
-        <div class="logo-icon">
-            <img src="logo.png" alt="Zynexa Logo">
-        </div>
-    </header>
-    <main>
-        <section id="about">
-            <h2>About Us</h2>
-            <p>We create innovative technology solutions.</p>
-        </section>
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <form>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <button type="submit">Submit</button>
-            </form>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Zynexa Develop. All Rights Reserved.</p>
-    </footer>
+
+<!-- NAV -->
+<nav>
+  <div class="logo-wrap">
+    <!-- LOGO: Black background with orange/yellow bolt -->
+    <svg class="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="42" height="42" rx="8" fill="#000000"/>
+      <polygon points="24,5 14,22 21,22 18,37 28,20 21,20" fill="url(#bolt)"/>
+      <defs>
+        <linearGradient id="bolt" x1="14" y1="5" x2="28" y2="37" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#f97316"/>
+          <stop offset="100%" stop-color="#fbbf24"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div>
+      <span class="logo-text">ZYNEXA</span>
+      <span class="logo-sub">DEVELOP</span>
+    </div>
+  </div>
+
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#divisions">Divisions</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="mailto:mailattvarun@gmail.com" class="nav-cta">Get In Touch</a></li>
+  </ul>
+
+  <div class="hamburger" onclick="this.classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-lines"></div>
+  <div class="hero-content">
+    <span class="hero-badge">⚡ Technology &amp; Digital Solutions</span>
+    <h1 class="hero-title">
+      <span class="line1">BUILD WHAT</span>
+      <span class="line2">MATTERS</span>
+    </h1>
+    <p class="hero-desc">We turn your ideas into real digital products — from concept to launch. Software, apps, design, and startup support under one roof.</p>
+    <div class="hero-btns">
+      <a href="#divisions" class="btn-primary">Explore Divisions</a>
+      <a href="#contact" class="btn-ghost">Start a Project</a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <div class="section-label">About Us</div>
+      <h2>We Build Digital Products That Drive Growth</h2>
+      <p>ZYNEXA DEVELOP is a technology and digital solutions company focused on helping individuals, startups, and businesses turn their ideas into real products.</p>
+      <p>We provide end-to-end services including software development, web and mobile application development, UI/UX design, product design, and digital system solutions.</p>
+      <p>Our mission is to solve real-world problems through innovative technology and creative design. We work closely with our clients to understand their needs and build scalable, reliable, and user-friendly digital products.</p>
+      <p>At ZYNEXA DEVELOP, we believe that great ideas deserve the right technology and support to grow.</p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Core Divisions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">360°</div>
+        <div class="stat-label">End-to-End Service</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Scalable Solutions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Client-Focused</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DIVISIONS -->
+<section id="divisions">
+  <div style="text-align:center; margin-bottom: 1rem;">
+    <div class="section-label" style="justify-content:center;">Our Divisions</div>
+    <h2>Three Pillars of <span style="background: linear-gradient(135deg, #f97316, #fbbf24); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Innovation</span></h2>
+    <p style="color:var(--muted); max-width:500px; margin: 0 auto; font-size:0.95rem; line-height:1.8; font-weight:300;">Every division is designed to serve a unique need — together, they cover everything your digital journey demands.</p>
+  </div>
+
+  <div class="divisions-grid">
+    <!-- TECH -->
+    <div class="division-card reveal">
+      <div class="div-icon">⚡</div>
+      <div class="div-name">ZYNEXA TECH</div>
+      <div class="div-tagline">Engineering &amp; Development</div>
+      <p class="div-desc">We build powerful, scalable digital products — from mobile apps to web platforms and immersive game experiences. Our engineers craft clean, high-performance code that brings your vision to life.</p>
+      <div class="div-services">
+        <span class="service-tag">App Development</span>
+        <span class="service-tag">Web Development</span>
+        <span class="service-tag">Game Development</span>
+        <span class="service-tag">Software Solutions</span>
+      </div>
+    </div>
+
+    <!-- STUDIO -->
+    <div class="division-card reveal" style="transition-delay:0.15s;">
+      <div class="div-icon">🎨</div>
+      <div class="div-name">ZYNEXA STUDIO</div>
+      <div class="div-tagline">Design &amp; Brand Identity</div>
+      <p class="div-desc">We craft beautiful, meaningful digital experiences. From intuitive UI/UX flows to bold brand identities and strategic marketing — we make your product look and feel extraordinary.</p>
+      <div class="div-services">
+        <span class="service-tag">UI/UX Design</span>
+        <span class="service-tag">Branding</span>
+        <span class="service-tag">Marketing</span>
+        <span class="service-tag">Product Design</span>
+      </div>
+    </div>
+
+    <!-- FOUNDERS -->
+    <div class="division-card reveal" style="transition-delay:0.3s;">
+      <div class="div-icon">🚀</div>
+      <div class="div-name">ZYNEXA FOUNDERS</div>
+      <div class="div-tagline">Startup &amp; Business Support</div>
+      <p class="div-desc">We partner with founders and businesses to navigate growth. From ideation to execution — business strategy, tech architecture, software selection, and go-to-market planning. We help you build right from day one.</p>
+      <div class="div-services">
+        <span class="service-tag">Startup Support</span>
+        <span class="service-tag">Business Strategy</span>
+        <span class="service-tag">Tech Consulting</span>
+        <span class="service-tag">Growth Marketing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label" style="justify-content:center;">Contact</div>
+  <h2>Let's Build Something <span style="background: linear-gradient(135deg, #f97316, #fbbf24); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Great</span></h2>
+
+  <div class="contact-card reveal">
+    <h3>Have an idea? We'd love to hear it.</h3>
+    <p>Whether you're a startup with a vision, a business looking to digitize, or an individual with an idea — reach out. We'll help you figure out the next step.</p>
+    <a href="mailto:mailattvarun@gmail.com" class="contact-mail">
+      <span class="mail-icon">✉️</span>
+      mailattvarun@gmail.com
+    </a>
+    <p style="margin-top:1.5rem; margin-bottom:0; font-size:0.8rem; color:#555;">We typically respond within 24 hours.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo logo-wrap">
+    <svg width="32" height="32" viewBox="0 0 42 42" fill="none">
+      <rect width="42" height="42" rx="8" fill="#000"/>
+      <polygon points="24,5 14,22 21,22 18,37 28,20 21,20" fill="url(#bolt2)"/>
+      <defs>
+        <linearGradient id="bolt2" x1="14" y1="5" x2="28" y2="37" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#f97316"/>
+          <stop offset="100%" stop-color="#fbbf24"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div>
+      <span class="logo-text" style="font-size:1.1rem;">ZYNEXA</span>
+      <span class="logo-sub">DEVELOP</span>
+    </div>
+  </div>
+  <p>© 2025 ZYNEXA DEVELOP. All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#divisions">Divisions</a></li>
+    <li><a href="mailto:mailattvarun@gmail.com">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.style.borderBottomColor = 'rgba(249,115,22,0.15)';
+    } else {
+      nav.style.borderBottomColor = 'var(--border)';
+    }
+  });
+
+  // Smooth nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      const el = document.querySelector(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
